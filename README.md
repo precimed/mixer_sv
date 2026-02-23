@@ -110,7 +110,7 @@ A few example files are included in the `sumstats/` directory for quick testing.
 | Hardware | Estimated runtime per trait |
 |---|---|
 | Apple M4 Max (36 GB RAM) | < 10 minutes |
-| Intel CPU (32 GB+ RAM) | ~1–2 hours |
+| Intel CPU (32 GB+ RAM) | ~30 mins – 1 hours |
 
 At least **32 GB of RAM** is recommended for genome-wide analysis.
 

@@ -1,0 +1,12 @@
+jupyterlab==4.4.3
+jupyterlab_pygments==0.3.0
+jupyterlab_server==2.27.3
+mat73==0.65
+numpy==2.3.0
+pandas==2.3.0
+scikit-learn==1.7.0
+scipy==1.15.3
+seaborn==0.13.2
+torch==2.7.1
+torchaudio==2.7.1
+torchvision==0.22.1
