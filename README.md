@@ -1,6 +1,6 @@
 # MiXeR-SV: Structural Variant Enrichment Analysis with PyTorch Optimization
 
-> **Version 0.0.1** — univariate SV enrichment analysis; bivariate mode coming soon.
+> **Version 0.0.1** — univariate SV enrichment analysis; intergration with older MiXeR features (e.g., bivariate analysis) planned for future release.
 
 ---
 
