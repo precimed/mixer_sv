@@ -13,7 +13,7 @@ source /cluster/projects/nn9114k/datngu/conda/etc/profile.d/conda.sh
 conda activate mixer
 
 
-RESULT_DIR="saga_results_107"
+RESULT_DIR="saga_results_107_constrain_zero_roi"
 mkdir -p ${RESULT_DIR}
 mkdir -p logs
 

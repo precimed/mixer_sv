@@ -1,6 +1,8 @@
 1kg_combined_plink_eas_AC3/
 1kg_combined_plink_eur_AC3/
 test_results/
+test_results2/
 tar.sh
 *.tar.gz
-
+run2.sh
+.gitignore
