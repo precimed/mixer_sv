@@ -303,6 +303,9 @@ def univariate_analysis(args, data, chr_results_list, annomat_BASE, annonames_BA
     logger.info("Fitting full model...")
     annot_idx = [2, 1]
     full_params = train_mixer_univariate_MoM(zvec1, nvec1, weights, annomat_ROI_ld[:, annot_idx])
+    if args.constrain_roi_estimates_to_zero:
+        full_params.effective_params_mask[2] = False
+        full_params.coefs[2] = 0.0
     full_params = train_mixer_univariate_MLE(
         zvec1, nvec1, weights, annomat_ROI_ld[:, annot_idx], full_params,
         n_epochs=args.pytorch_epochs, lr=args.pytorch_lr
@@ -444,6 +447,8 @@ def add_common_arguments(parser):
                        help="'S' parameter of heritability model, contributing via H^S (default: %(default)s)")
     parser.add_argument('--save-null-model', default=False, action='store_true',
                        help='Save/reuse baseline model across runs via .sig2_beta_i.mat file')
+    parser.add_argument('--constrain-roi-estimates-to-zero', default=False, action='store_true',
+                       help='Constrain ROI estimates to zero (default: False)')
     parser.add_argument('--pytorch-epochs', type=int, default=500,
                        help='Number of PyTorch optimization epochs (default: 500)')
     parser.add_argument('--pytorch-lr', type=float, default=0.001,
