@@ -49,6 +49,7 @@ python mixer2.py univar \
     --trait1 "$TRAIT" \
     --snp-file "$SNP_FILE" \
     --output "$OUT" \
+    --constrain-roi-estimates-to-zero \
     --seed 42
 
 echo "Completed: $BASENAME"
