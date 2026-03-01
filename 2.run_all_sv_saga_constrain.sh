@@ -5,7 +5,7 @@
 #SBATCH --mem-per-cpu=40G
 #SBATCH --cpus-per-task=1
 #SBATCH --output=logs/sv_mixer_eur_%A_%a.out
-#SBATCH --array=0-104
+#SBATCH --array=0-105
 
 #set -e  # Exit on error
 
