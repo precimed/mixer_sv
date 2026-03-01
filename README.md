@@ -114,7 +114,7 @@ A few example files are included in the `sumstats/` directory for quick testing.
 
 At least **32 GB of RAM** is recommended for genome-wide analysis.
 
-### Running univariate analysis
+### Running analysis
 
 ```sh
 # Activate the conda environment
@@ -154,6 +154,51 @@ for TRAIT in sumstats/*.sumstats.gz; do
 done
 ```
 
+### Running the constrained model (null SV enrichment)
+
+The **constrained model** fixes the within-region heritability coefficient to zero, effectively testing the null hypothesis that SVs contribute no additional heritability beyond the genome-wide baseline. This is useful for:
+
+
+Add `--constrain-roi-estimates-to-zero` to any `univar` call:
+
+```sh
+# Activate the conda environment
+conda activate mixer2
+
+# Create output directory
+mkdir -p test_results_constrained
+
+# Set paths to LD reference data
+LD_DIR="1kg_combined_plink_eur_AC3"
+SNP_FILE="$LD_DIR/SV_variants.txt"
+ANNOT="$LD_DIR/annot_mat.txt"
+
+# Run constrained analysis for all traits in sumstats/
+for TRAIT in sumstats/*.sumstats.gz; do
+    BASENAME=$(basename "$TRAIT" .sumstats.gz)
+    OUT="test_results_constrained/univar_${BASENAME}.txt"
+    OUT_LIST="test_results_constrained/univar_${BASENAME}_list.txt"
+
+    # Skip if output already exists
+    if [[ -f "$OUT_LIST" && -s "$OUT_LIST" ]]; then
+        echo "Skipping (already exists): $OUT_LIST"
+        continue
+    fi
+
+    echo "Processing (constrained): $BASENAME"
+
+    python mixer2.py univar \
+        --annot    "$ANNOT"    \
+        --ld-mat1  "$LD_DIR"   \
+        --trait1   "$TRAIT"    \
+        --snp-file "$SNP_FILE" \
+        --output   "$OUT"      \
+        --constrain-roi-estimates-to-zero \
+        --seed 42
+done
+```
+
+
 ---
 
 ## 6. CLI Arguments
@@ -182,6 +227,7 @@ All arguments below apply to the `univar` subcommand. Run `python mixer2.py univ
 | `--only-base` | `False` | Use only the "base" (intercept) annotation column |
 | `--disable-inverse-ld-score-weights` | `False` | Disable inverse-LD-score weighting |
 | `--save-null-model` | `False` | Cache the null (baseline) model to a `.sig2_beta_i.mat` file for reuse across runs |
+| `--constrain-roi-estimates-to-zero` | `False` | Constrain the within-region (SV) heritability coefficient to zero; useful as a null/constrained model for comparison against the unconstrained fit |
 | `--verbose`, `-v` | `False` | Enable verbose logging |
 | `--debug` | `False` | Enable debug-level logging |
 
