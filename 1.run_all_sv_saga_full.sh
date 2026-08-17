@@ -43,7 +43,7 @@ echo "Processing trait ${SLURM_ARRAY_TASK_ID}: $BASENAME"
 echo "Input: $TRAIT"
 echo "Output: $OUT"
 
-python mixer2.py univar \
+python mixer_sv.py univar \
     --annot "$ANNOT" \
     --ld-mat1 "$LD_DIR" \
     --trait1 "$TRAIT" \

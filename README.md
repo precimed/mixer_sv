@@ -1,6 +1,6 @@
-# MiXeR-SV: Structural Variant Enrichment Analysis with PyTorch Optimization
+# MiXeR-SV: Structural Variant Enrichment Analysis
 
-> **Version 0.0.1** — univariate SV enrichment analysis; intergration with older MiXeR features (e.g., bivariate analysis) planned for future release.
+> **Version 0.1** — SV enrichment analysis.
 
 ---
 
@@ -14,18 +14,19 @@
 6. [CLI Arguments](#6-cli-arguments)
 7. [Output Files](#7-output-files)
 8. [Citation](#8-citation)
+9. [License](#9-license)
+10. [Changelog](#10-changelog)
 
 ---
 
 ## 1. Overview
 
-**MiXeR-SV** is a statistical genetics tool for quantifying the enrichment of structural variants (SVs) in trait heritability. It builds on the MiXeR framework and uses PyTorch for efficient gradient-based optimization. Key features include:
+**MiXeR-SV** is a statistical genetics tool for quantifying the enrichment of structural variants (SVs) in trait heritability. It builds on the MiXeR framework. Key features include:
 
 - Univariate SV enrichment analysis via LD-score regression and a Gaussian mixture heritability model.
 - Annotation-based enrichment estimation with fold-enrichment statistics and standard errors.
 - QC of GWAS summary statistics (MAF filtering, MHC exclusion, ambiguous SNP removal, allele alignment).
 - Chromosome-level data processing for memory efficiency.
-- Bivariate (cross-trait) analysis planned for a future release.
 
 ---
 
@@ -35,10 +36,10 @@ The recommended way to set up the environment is via [conda](https://docs.conda.
 
 ```sh
 # Create a new conda environment with Python 3.13
-conda create -n mixer2 python=3.13 -y
+conda create -n mixer_sv python=3.13 -y
 
 # Activate the environment
-conda activate mixer2
+conda activate mixer_sv
 
 # Install all required packages
 pip install -r requirements.txt
@@ -64,7 +65,7 @@ MiXeR-SV requires pre-computed LD matrices. We provide LD reference data derived
 **Download link:**
 
 ```
-https://drive.google.com/drive/folders/15sg6P0rmHxRBQNglpFkDjoUSf1C6S-Q8?usp=sharing
+https://doi.org/10.5281/zenodo.20676136
 ```
 
 You can download the two tar.gz files for the EAS and EUR populations, then extract them:
@@ -86,8 +87,6 @@ The directory structure should look like:
 │   ...
 └── chr22.ldmat/
 ```
-
-> A permanent Zenodo DOI will be provided upon completion of peer review.
 
 ---
 
@@ -118,7 +117,7 @@ At least **32 GB of RAM** is recommended for genome-wide analysis.
 
 ```sh
 # Activate the conda environment
-conda activate mixer2
+conda activate mixer_sv
 
 # Create output directory
 mkdir -p test_results
@@ -144,7 +143,7 @@ for TRAIT in sumstats/*.sumstats.gz; do
 
     echo "Processing: $BASENAME"
 
-    python mixer2.py univar \
+    python mixer_sv.py univar \
         --annot    "$ANNOT"    \
         --ld-mat1  "$LD_DIR"   \
         --trait1   "$TRAIT"    \
@@ -163,7 +162,7 @@ Add `--constrain-roi-estimates-to-zero` to any `univar` call:
 
 ```sh
 # Activate the conda environment
-conda activate mixer2
+conda activate mixer_sv
 
 # Create output directory
 mkdir -p test_results_constrained
@@ -187,7 +186,7 @@ for TRAIT in sumstats/*.sumstats.gz; do
 
     echo "Processing (constrained): $BASENAME"
 
-    python mixer2.py univar \
+    python mixer_sv.py univar \
         --annot    "$ANNOT"    \
         --ld-mat1  "$LD_DIR"   \
         --trait1   "$TRAIT"    \
@@ -203,7 +202,7 @@ done
 
 ## 6. CLI Arguments
 
-All arguments below apply to the `univar` subcommand. Run `python mixer2.py univar --help` for the full help message.
+All arguments below apply to the `univar` subcommand. Run `python mixer_sv.py univar --help` for the full help message.
 
 ### Required arguments
 
@@ -251,5 +250,22 @@ Result metrics include fold-enrichment estimates, standard errors, statistics, a
 
 If you use MiXeR-SV in your research, please cite:
 
-> *Citation details will be added upon publication.*
+> Nguyen, D.T., Shadrin, A.A., Parker, N., Fuhrer, J., Vo, N.S., Dale, A.M., Andreassen, O.A., Frei, O. Structural variants contribute substantially to complex trait heritability. *bioRxiv* 2026.02.28.708732; doi: https://doi.org/10.64898/2026.02.28.708732 (to appear in *Genome Biology*).
+
+---
+
+## 9. License
+
+MiXeR-SV is released under the [GNU General Public License v3.0 (GPL-3.0)](LICENSE).
+
+---
+
+## 10. Changelog
+
+### v0.1
+- First peer-reviewed release.
+- Minor updates: license, LD reference URLs, renamed scripts, updated README.
+
+### v0.0.1
+- Initial pre-release: SV enrichment analysis.
 

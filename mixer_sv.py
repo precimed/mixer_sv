@@ -461,7 +461,7 @@ def main():
         epilog="""
             Examples:
             # Univariate analysis
-            python mixer2.py univar \
+            python mixer_sv.py univar \
                 --annot data/reference/annot_mat.txt \
                 --ld-mat1 /path/to/ld_reference/ \\
                 --trait1 data/sumstats/trait1.sumstats \\
