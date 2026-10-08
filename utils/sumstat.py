@@ -315,12 +315,11 @@ class SumstatQC:
         Returns:
             np.ndarray of sample sizes, shape (n_ref,), aligned to self.info['snp'] order.
         """
+        # Deduplicate merged SNPs first (keep='first') so the left merge preserves self.info length,
+        # even when self.info itself contains duplicated SNP IDs (e.g. after liftover)
         result = self.info[['snp']].merge(
-            self.merged[['snp', 'n']], on='snp', how='left'
+            self.merged[['snp', 'n']].drop_duplicates('snp', keep='first'), on='snp', how='left'
         )
-        # Handle duplicates in merged data to ensure output matches self.info length
-        if len(result) != len(self.info):
-            result = result.drop_duplicates('snp', keep='first')
         nvec = result['n'].to_numpy()
         return nvec
         
@@ -332,12 +331,11 @@ class SumstatQC:
         Returns:
             np.ndarray of z-scores, shape (n_ref,), aligned to self.info['snp'] order.
         """
+        # Deduplicate merged SNPs first (keep='first') so the left merge preserves self.info length,
+        # even when self.info itself contains duplicated SNP IDs (e.g. after liftover)
         result = self.info[['snp']].merge(
-            self.merged[['snp', 'z_aligned']], on='snp', how='left'
+            self.merged[['snp', 'z_aligned']].drop_duplicates('snp', keep='first'), on='snp', how='left'
         )
-        # Handle duplicates in merged data to ensure output matches self.info length
-        if len(result) != len(self.info):
-            result = result.drop_duplicates('snp', keep='first')
         zvec = result['z_aligned'].to_numpy()
         return zvec
 
